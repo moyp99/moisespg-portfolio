@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { ThemeProvider } from "styled-components";
+import GlobalStyles from "./components/GlobalStyles";
+import Nav from "./components/Nav";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Portfolio from "./pages/Portfolio";
+import { theme } from "./styles";
+import { Switch, Route, useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Nav />
+        <GlobalStyles />
+        <Switch location={location} key={location.pathname}>
+          <Route path='/' exact>
+            <About />
+          </Route>
+          <Route path='/portfolio' exact>
+            <Portfolio />
+          </Route>
+          <Route path='/contact' exact>
+            <Contact />
+          </Route>
+        </Switch>
+      </div>
+    </ThemeProvider>
   );
 }
 
